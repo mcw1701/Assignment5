@@ -54,13 +54,22 @@ namespace Assignment5.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,UserName,UserPassword,UserEmail")] NetUser netUser)
+        public async Task<IActionResult> Create([Bind("Id,UserName,UserPassword,UserEmail,UserType")] NetUser netUser)
         {
             if (ModelState.IsValid)
             {
                 _context.Add(netUser);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                if (!string.IsNullOrEmpty(HttpContext.Session.GetString(IndexModel.SessionKeyType)) && 
+                    string.Equals(HttpContext.Session.GetString(IndexModel.SessionKeyType), "Admin")) {
+                    return RedirectToAction(nameof(Index));
+                } else
+                {
+                    HttpContext.Session.SetString(IndexModel.SessionKeyUser, netUser.UserName);
+                    HttpContext.Session.SetString(IndexModel.SessionKeyType, netUser.UserType);
+                    return RedirectToAction("Index", "Home");
+                }
+                
             }
             return View(netUser);
         }
@@ -86,7 +95,7 @@ namespace Assignment5.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,UserName,UserPassword,UserEmail")] NetUser netUser)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,UserName,UserPassword,UserEmail,UserType")] NetUser netUser)
         {
             if (id != netUser.Id)
             {

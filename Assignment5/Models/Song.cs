@@ -6,7 +6,7 @@ namespace Assignment5.Models
     public class Song
     {
 
-        public required int Id { get; set; }
+        public int Id { get; set; }
 
         [StringLength(60, MinimumLength = 3)]
         public required string Title { get; set; }

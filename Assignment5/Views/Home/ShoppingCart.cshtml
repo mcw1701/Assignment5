@@ -1,23 +1,11 @@
-﻿@model Assignment5.Models.SongGenrePerformerViewModel;
-
+﻿@model Assignment5.Models.Cart;
 @{
-    ViewData["Title"] = "Home Page";
-}
 
+    ViewData["Title"] = "Shopping Cart";
+
+}
 <div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <h2 class="display-6">@Context.Session.GetString(IndexModel.SessionKeyUser)</h2>
-    <form asp-controller="Home" asp-action="Index" method="get">
-        <p>
-            Genres<br />
-            @Html.DropDownList("Genre", Model.Genres as SelectList)
-            <input type="submit" value="Filter For Genre" /><br />
-            Performers<br />
-            @Html.DropDownList("Performer", Model.Performers as SelectList)
-            <input type="submit" value="Filter For Performer" />
-        </p>
-    </form>
-    <form asp-controller="Home" asp-action="ShoppingCart" method="post">
+    <h1 class="display-4">Shopping Cart</h1>
     <table class="table">
         <thead>
             <tr>
@@ -52,13 +40,11 @@
                     <td>
                         @Html.DisplayFor(modelItem => item.Price)
                     </td>
-                    <td>
-                        <input type="checkbox" name="selectedSongs" value=@item.Id.ToString() />
-                    </td>
                 </tr>
             }
         </tbody>
     </table>
-    <input type="submit" value="Add To Shopping Cart"/>
+    <form asp-controller="Home" asp-action="Index">
+        <input type="submit" value="Check Out" />
     </form>
 </div>
