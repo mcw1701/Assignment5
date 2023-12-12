@@ -1,8 +1,64 @@
-﻿@{
+﻿@model Assignment5.Models.SongGenrePerformerViewModel;
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    <h2 class="display-6">@Context.Session.GetString(IndexModel.SessionKeyUser)</h2>
+    <form asp-controller="Home" asp-action="Index" method="get">
+        <p>
+            Genres<br />
+            @Html.DropDownList("Genre", Model.Genres as SelectList)
+            <input type="submit" value="Filter For Genre" /><br />
+            Performers<br />
+            @Html.DropDownList("Performer", Model.Performers as SelectList)
+            <input type="submit" value="Filter For Performer" />
+        </p>
+    </form>
+    <form asp-controller="Home" asp-action="ShoppingCart" method="post">
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Songs![0].Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Songs![0].Genre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Songs![0].Performer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Songs![0].Price)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Songs!)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Genre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Performer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                    <td>
+                        <input type="checkbox" name="selectedSongs" value=@item.Id.ToString() />
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <input type="submit" value="Add To Shopping Cart"/>
+    </form>
 </div>
