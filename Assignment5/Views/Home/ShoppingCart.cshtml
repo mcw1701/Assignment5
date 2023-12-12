@@ -44,6 +44,8 @@
             }
         </tbody>
     </table>
+    Total: @Html.DisplayFor(model => model.total);
+    <br />
     <form asp-controller="Home" asp-action="Index">
         <input type="submit" value="Check Out" />
     </form>
