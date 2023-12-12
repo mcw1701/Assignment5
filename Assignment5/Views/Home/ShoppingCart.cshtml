@@ -1,0 +1,52 @@
+﻿@model Assignment5.Models.Cart;
+@{
+
+    ViewData["Title"] = "Shopping Cart";
+
+}
+<div class="text-center">
+    <h1 class="display-4">Shopping Cart</h1>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.Songs![0].Title)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Songs![0].Genre)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Songs![0].Performer)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.Songs![0].Price)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Songs!)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Title)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Genre)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Performer)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Price)
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    Total: @Html.DisplayFor(model => model.total);
+    <br />
+    <form asp-controller="Home" asp-action="Index">
+        <input type="submit" value="Check Out" />
+    </form>
+</div>
